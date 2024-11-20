@@ -1,0 +1,51 @@
+const mongoose = require("mongoose");
+const ratingSchema = require("./rating");
+
+const productSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  images: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  //ratings consists of array of user that have rated that product so that's why used [] in ratingSchema
+  ratings: [ratingSchema],
+});
+
+const Product = mongoose.model("Product", productSchema);
+module.exports = { Product, productSchema };
+
+///In your productSchema definition, you have not explicitly specified a collection name. When you use the mongoose.model() function, 
+///Mongoose automatically determines the collection name by pluralizing and lowercasing the model name.
+
+///under is the example if we want to specify collection name ourselves
+// const mongoose = require('mongoose');
+
+// const userSchema = new mongoose.Schema({
+//   name: String,
+//   age: Number,
+// }, { collection: 'users' }); // Explicitly specify the collection name
+
+// const User = mongoose.model('User', userSchema);
